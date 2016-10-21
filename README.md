@@ -1,10 +1,6 @@
-![Build Status](https://travis-ci.org/xpepermint/express-vue-dev.svg?branch=master)&nbsp;[![NPM Version](https://badge.fury.io/js/express-vue-dev.svg)](https://badge.fury.io/js/express-vue-dev)&nbsp;[![Dependency Status](https://gemnasium.com/xpepermint/express-vue-dev.svg)](https://gemnasium.com/xpepermint/express-vue-dev)
+# [koa](http://koajs.com)-[vue](http://vuejs.org)-dev
 
-# [express](http://expressjs.com)-[vue](http://vuejs.org)-dev
-
-> Vue.js development server middleware for Express.js.
-
-<img src="logo.png" height="60" style="margin-bottom: 20px" />
+> Vue.js development server middleware for Koa.js.
 
 This is a middleware for [Koa.js](http://koajs.com) and provides a fully featured development server built on top of [Webpack](http://webpack.github.io) which renders the [Vue.js](http://vuejs.org) application for client-side and server-side. The middleware is configurable and supports hot module replacement out of the box. This middleware should be used in **development only**. Please check the [koa-vue-builder](https://github.com/kristianmandrup/koa-vue-builder) middleware for a production ready alternative.
 
@@ -60,10 +56,36 @@ Check the included `./example` directory or run the `npm run example` command to
 | client | Object | Yes | - | Webpack configuration object for client-side rendering.
 | verbose | Boolean | No | false | When `true` detailed logging is enabled.
 
+### Webpack middleware
+
+Uses Koa specific webpack middleware:
+
+- [koa-webpack-dev-middleware](https://www.npmjs.com/package/koa-webpack-dev-middleware)
+- [koa-webpack-hot-middleware](https://www.npmjs.com/package/koa-webpack-hot-middleware)
+
+The middlewares are wrapped using `convert` and `compose` in order to work with Koa2 async/await promises:
+
+```js
+const convert = require('koa-convert');
+const compose = convert.compose;
+
+// ...
+
+return compose([
+  convert(webpackDevMiddleware(clientCompiler, {
+    //...
+  }),
+  convert(webpackHotMiddleware(clientCompiler, {
+    //...
+  }
+  //...
+]);
+```
+
 ## License (MIT)
 
 ```
-Copyright (c) 2016 Kristijan Sedlak <xpepermint@gmail.com>
+Copyright (c) 2016 Kristian Mandrup <kmandrup@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
