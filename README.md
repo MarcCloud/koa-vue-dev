@@ -6,6 +6,8 @@ This is a middleware for [Koa.js](http://koajs.com) and provides a fully feature
 
 This is an open source package for [Vue.js](http://vuejs.org/) and [Koa.js](http://koajs.com). The source code is available on [GitHub](https://github.com/kristianmandrup/koa-vue-dev) where you can also find our [issue tracker](https://github.com/kristianmandrup/koa-vue-dev/issues).
 
+Note: This project was forked with permission from [express-vue-dev](forked from xpepermint/express-vue-dev)
+
 ## Related Projects
 
 * [vue-webpack](https://github.com/xpepermint/vue-webpack): Webpack configuration object generator for Vue.js.

@@ -40,7 +40,7 @@
     "compiler",
     "dev-server"
   ],
-  "author": "Kristijan Sedlak (Xpepermint)",
+  "author": "Kristian Mandrup (kristianmandrup)",
   "license": "MIT",
   "devDependencies": {
     "ava": "^0.16.0",
