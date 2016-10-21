@@ -6,15 +6,15 @@
 
 <img src="logo.png" height="60" style="margin-bottom: 20px" />
 
-This is a middleware for [Express.js](http://expressjs.com) and provides a fully featured development server built on top of [Webpack](http://webpack.github.io) which renders the [Vue.js](http://vuejs.org) application for client-side and server-side. The middleware is configurable and supports hot module replacement out of the box. This middleware should be used in **development only**. Please check the [express-vue-builder](https://github.com/xpepermint/express-vue-builder) middleware for a production ready alternative.
+This is a middleware for [Koa.js](http://koajs.com) and provides a fully featured development server built on top of [Webpack](http://webpack.github.io) which renders the [Vue.js](http://vuejs.org) application for client-side and server-side. The middleware is configurable and supports hot module replacement out of the box. This middleware should be used in **development only**. Please check the [koa-vue-builder](https://github.com/kristianmandrup/koa-vue-builder) middleware for a production ready alternative.
 
-This is an open source package for [Vue.js](http://vuejs.org/) and [Express.js](http://expressjs.com). The source code is available on [GitHub](https://github.com/xpepermint/express-vue-dev) where you can also find our [issue tracker](https://github.com/xpepermint/express-vue-dev/issues).
+This is an open source package for [Vue.js](http://vuejs.org/) and [Koa.js](http://koajs.com). The source code is available on [GitHub](https://github.com/kristianmandrup/koa-vue-dev) where you can also find our [issue tracker](https://github.com/kristianmandrup/koa-vue-dev/issues).
 
 ## Related Projects
 
 * [vue-webpack](https://github.com/xpepermint/vue-webpack): Webpack configuration object generator for Vue.js.
 * [vue-builder](https://github.com/xpepermint/vue-builder): Server-side and client-side rendering for Vue.js.
-* [express-vue-builder](https://github.com/xpepermint/express-vue-builder): Vue.js server-side rendering middleware for Express.js.
+* [koa-vue-builder](https://github.com/kristianmandrup/koa-vue-builder): Vue.js server-side rendering middleware for Koa.js.
 * [vue-cli-template](https://github.com/xpepermint/vue-cli-template): A simple server-side rendering CLI template for Vue.js.
 
 ## Install
@@ -23,7 +23,7 @@ Run the command below to install the package.
 
 ```
 $ npm install vue-builder webpack@2.1.0-beta.25
-$ npm install --save-dev express-vue-dev
+$ npm install --save-dev koa-vue-dev
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ To create a middleware, create a Webpack configuration objects for client-side a
 
 ```js
 const {build} = require('vue-webpack');
-const {devServer} = require('express-vue-dev');
+const {devServer} = require('koa-vue-dev');
 
 let middleware = devServer({
   server: build({

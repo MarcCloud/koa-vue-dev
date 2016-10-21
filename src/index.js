@@ -1,29 +1,21 @@
+const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const {VueBuilder, VueRender} = require('vue-builder');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
+const webpackDevMiddleware = require('koa-webpack-dev-middleware');
+const webpackHotMiddleware = require('koa-webpack-hot-middleware');
 
 /*
-* A function for merging middlewares into one.
+* Vue.js development server middleware.
 */
 
-function combine(mids) {
-  return mids.reduce(function(a, b) {
-    return function(req, res, next) {
-      a(req, res, function(err) {
-        if (err) {
-          return next(err);
-        }
-        b(req, res, next);
-      });
-    };
-  });
-}
+// http://stackoverflow.com/questions/35196380/webpack-hot-middleware-with-koa-2-0
+// "You can use koa-webpack-hot-middleware and wrap it with koa-convert"
 
-/*
-* Development server middleware for serving Vue.js application.
-*/
+const convert = require('koa-convert');
+const compose = convert.compose; // || require('koa-compose');
+
+// Convert koa legacy ( 0.x & 1.x ) generator middleware to modern promise middleware ( 2.x ).
 
 exports.devServer = function ({server, client, verbose=false}={}) {
   let clientConfig = Object.assign({}, client);
@@ -32,20 +24,21 @@ exports.devServer = function ({server, client, verbose=false}={}) {
   let clientCompiler = webpack(clientConfig);
   let serverBuilder = new VueBuilder(serverConfig);
 
-  return combine([
-    webpackDevMiddleware(clientCompiler, {
+  return compose([
+    convert(webpackDevMiddleware(clientCompiler, {
       noInfo: !verbose,
       publicPath: clientCompiler.options.output.publicPath
-    }),
-    webpackHotMiddleware(clientCompiler, {
+    })),
+    convert(webpackHotMiddleware(clientCompiler, {
       serverSideRender: false,
       historyApiFallback: true
-    }),
-    (req, res, next) => {
-      serverBuilder.compile().then((source) => {
-        req.vue = new VueRender(source);
-        next();
-      });
+    })),
+    async (ctx, next) => {
+      // console.log('devServer: add VueRender to .vue on ctx');
+      let source = await serverBuilder.compile();
+      ctx.vue = new VueRender(source);
+      await next();
     }
   ]);
 }
+
